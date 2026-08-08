@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Senta - Free online image compressor. Compress JPG, PNG and WebP images quickly and easily.">
+<meta name="keywords" content="image compressor, compress image, JPG compressor, PNG compressor, WebP compressor">
+<title>Senta - Free Image Compressor</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f7f9fc;
+color:#172554;
+min-height:100vh;
+}
+
+header{
+background:white;
+padding:20px 7%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #e5e7eb;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:26px;
+font-weight:800;
+color:#2563eb;
+}
+
+.logo-icon{
+width:42px;
+height:42px;
+border-radius:12px;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:22px;
+font-weight:bold;
+}
+
+main{
+max-width:900px;
+margin:55px auto;
+padding:0 20px;
+text-align:center;
+}
+
+h1{
+font-size:42px;
+margin-bottom:12px;
+color:#172554;
+}
+
+.subtitle{
+font-size:18px;
+color:#64748b;
+margin-bottom:35px;
+}
+
+.card{
+background:white;
+border-radius:22px;
+padding:35px;
+box-shadow:0 10px 35px rgba(15,23,42,.08);
+border:1px solid #e5e7eb;
+}
+
+.upload{
+border:2px dashed #60a5fa;
+border-radius:18px;
+padding:50px 20px;
+cursor:pointer;
+background:#eff6ff;
+transition:.2s;
+}
+
+.upload:hover{
+background:#dbeafe;
+}
+
+.upload-icon{
+font-size:48px;
+margin-bottom:12px;
+}
+
+.upload h2{
+font-size:22px;
+margin-bottom:8px;
+}
+
+.upload p{
+color:#64748b;
+}
+
+input[type=file]{display:none}
+
+.controls{
+margin-top:25px;
+display:none;
+}
+
+.controls label{
+font-weight:bold;
+display:block;
+margin-bottom:10px;
+}
+
+input[type=range]{
+width:100%;
+accent-color:#2563eb;
+}
+
+#qualityText{
+font-weight:bold;
+color:#2563eb;
+}
+
+button{
+border:0;
+border-radius:12px;
+padding:14px 25px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:22px;
+}
+
+.compress{
+background:#2563eb;
+color:white;
+width:100%;
+}
+
+.compress:hover{
+background:#1d4ed8;
+}
+
+.result{
+display:none;
+margin-top:25px;
+padding:20px;
+background:#f0fdf4;
+border-radius:15px;
+}
+
+.download{
+background:#16a34a;
+color:white;
+text-decoration:none;
+display:inline-block;
+margin-top:15px;
+}
+
+.info{
+margin-top:35px;
+color:#64748b;
+font-size:14px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+color:#64748b;
+font-size:14px;
+}
+
+@media(max-width:600px){
+h1{font-size:32px}
+.card{padding:20px}
+main{margin:35px auto}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+<div class="logo-icon">S</div>
+Senta
+</div>
+</header>
+
+<main>
+
+<h1>Compress Your Images</h1>
+
+<p class="subtitle">
+Reduce image file size quickly while keeping good quality.
+</p>
+
+<div class="card">
+
+<label class="upload" for="imageInput">
+<div class="upload-icon">🖼️</div>
+<h2>Choose an Image</h2>
+<p>JPG, PNG or WebP • Free & Easy</p>
+</label>
+
+<input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp">
+
+<div class="controls" id="controls">
+
+<label>
+Compression Quality:
+<span id="qualityText">80%</span>
+</label>
+
+<input type="range" id="quality" min="10" max="100" value="80">
+
+<button class="compress" id="compressBtn">
+Compress Image
+</button>
+
+</div>
+
+<div class="result" id="result">
+<strong id="resultText"></strong>
+<br>
+
+<a id="downloadBtn" class="download" download="senta-compressed.jpg">
+Download Compressed Image
+</a>
+</div>
+
+</div>
+
+<p class="info">
+Your image is processed directly in your browser.
+It is not uploaded to a server.
+</p>
+
+</main>
+
+<footer>
+© 2026 Senta • Free Online Image Compressor
+</footer>
+
+<script>
+const imageInput = document.getElementById("imageInput");
+const controls = document.getElementById("controls");
+const quality = document.getElementById("quality");
+const qualityText = document.getElementById("qualityText");
+const compressBtn = document.getElementById("compressBtn");
+const result = document.getElementById("result");
+const resultText = document.getElementById("resultText");
+const downloadBtn = document.getElementById("downloadBtn");
+
+let selectedImage = null;
+
+imageInput.addEventListener("change", function(){
+const file = this.files[0];
+
+if(!file) return;
+
+selectedImage = file;
+controls.style.display = "block";
+result.style.display = "none";
+});
+
+quality.addEventListener("input", function(){
+qualityText.textContent = this.value + "%";
+});
+
+compressBtn.addEventListener("click", function(){
+
+if(!selectedImage) return;
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const img = new Image();
+
+img.onload = function(){
+
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = img.width;
+canvas.height = img.height;
+
+ctx.drawImage(img,0,0);
+
+const qualityValue = Number(quality.value) / 100;
+
+canvas.toBlob(function(blob){
+
+if(!blob) return;
+
+const originalKB = (selectedImage.size / 1024).toFixed(1);
+const compressedKB = (blob.size / 1024).toFixed(1);
+
+const url = URL.createObjectURL(blob);
+
+downloadBtn.href = url;
+
+resultText.textContent =
+"Original: " + originalKB + " KB → Compressed: " + compressedKB + " KB";
+
+result.style.display = "block";
+
+}, "image/jpeg", qualityValue);
+
+};
+
+img.src = e.target.result;
+
+};
+
+reader.readAsDataURL(selectedImage);
+
+});
+</script>
+
+</body>
+  </html>
