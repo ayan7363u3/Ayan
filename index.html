@@ -3,181 +3,369 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Senta - Free online image compressor. Compress JPG, PNG and WebP images quickly and easily.">
-<meta name="keywords" content="image compressor, compress image, JPG compressor, PNG compressor, WebP compressor">
-<title>Senta - Free Image Compressor</title>
+
+<meta name="description" content="Senta is a fast, free online image compressor. Compress JPG, PNG and WebP images directly in your browser.">
+<meta name="keywords" content="image compressor, compress image, reduce image size, JPG compressor, PNG compressor, WebP compressor">
+<meta name="author" content="Senta">
+
+<title>Senta — Free Image Compressor</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f7f9fc;
-color:#172554;
-min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f8fbff;
+    color:#102a43;
+    min-height:100vh;
 }
 
 header{
-background:white;
-padding:20px 7%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid #e5e7eb;
+    background:#ffffff;
+    border-bottom:1px solid #e5edf6;
+    padding:18px 6%;
+}
+
+.nav{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:26px;
-font-weight:800;
-color:#2563eb;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:26px;
+    font-weight:800;
+    color:#1769e0;
 }
 
-.logo-icon{
-width:42px;
-height:42px;
-border-radius:12px;
-background:linear-gradient(135deg,#2563eb,#06b6d4);
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:22px;
-font-weight:bold;
+.logoMark{
+    width:43px;
+    height:43px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#1769e0,#00b8d9);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:23px;
+    font-weight:900;
+    box-shadow:0 7px 20px rgba(23,105,224,.22);
+}
+
+.badge{
+    background:#eef6ff;
+    color:#1769e0;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
 }
 
 main{
-max-width:900px;
-margin:55px auto;
-padding:0 20px;
-text-align:center;
+    max-width:950px;
+    margin:55px auto;
+    padding:0 20px;
 }
 
-h1{
-font-size:42px;
-margin-bottom:12px;
-color:#172554;
+.hero{
+    text-align:center;
 }
 
-.subtitle{
-font-size:18px;
-color:#64748b;
-margin-bottom:35px;
+.hero h1{
+    font-size:46px;
+    line-height:1.1;
+    margin-bottom:15px;
+    color:#102a43;
 }
 
-.card{
-background:white;
-border-radius:22px;
-padding:35px;
-box-shadow:0 10px 35px rgba(15,23,42,.08);
-border:1px solid #e5e7eb;
+.hero h1 span{
+    color:#1769e0;
 }
 
-.upload{
-border:2px dashed #60a5fa;
-border-radius:18px;
-padding:50px 20px;
-cursor:pointer;
-background:#eff6ff;
-transition:.2s;
+.hero p{
+    color:#627d98;
+    font-size:18px;
+    line-height:1.6;
+    max-width:650px;
+    margin:auto;
 }
 
-.upload:hover{
-background:#dbeafe;
+.tool{
+    margin-top:38px;
+    background:#ffffff;
+    border:1px solid #e2eaf3;
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 18px 50px rgba(16,42,67,.08);
 }
 
-.upload-icon{
-font-size:48px;
-margin-bottom:12px;
+.dropzone{
+    border:2px dashed #7db5f5;
+    border-radius:20px;
+    padding:55px 20px;
+    text-align:center;
+    background:#f4f9ff;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.upload h2{
-font-size:22px;
-margin-bottom:8px;
+.dropzone:hover,
+.dropzone.dragover{
+    background:#e7f2ff;
+    border-color:#1769e0;
 }
 
-.upload p{
-color:#64748b;
+.uploadIcon{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    background:#dcecff;
+    margin:0 auto 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
 }
 
-input[type=file]{display:none}
+.dropzone h2{
+    font-size:21px;
+    margin-bottom:8px;
+}
+
+.dropzone p{
+    color:#718096;
+    font-size:14px;
+}
+
+.dropzone strong{
+    color:#1769e0;
+}
+
+#fileInput{
+    display:none;
+}
 
 .controls{
-margin-top:25px;
-display:none;
+    display:none;
+    margin-top:25px;
 }
 
-.controls label{
-font-weight:bold;
-display:block;
-margin-bottom:10px;
+.preview{
+    display:none;
+    background:#f8fafc;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:22px;
 }
 
-input[type=range]{
-width:100%;
-accent-color:#2563eb;
+.preview img{
+    display:block;
+    max-width:100%;
+    max-height:300px;
+    margin:auto;
+    border-radius:12px;
 }
 
-#qualityText{
-font-weight:bold;
-color:#2563eb;
+.fileName{
+    text-align:center;
+    margin-top:12px;
+    font-weight:700;
+    word-break:break-word;
 }
 
-button{
-border:0;
-border-radius:12px;
-padding:14px 25px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-margin-top:22px;
+.sliderTitle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+    font-weight:700;
 }
 
-.compress{
-background:#2563eb;
-color:white;
-width:100%;
+#qualityValue{
+    color:#1769e0;
 }
 
-.compress:hover{
-background:#1d4ed8;
+input[type="range"]{
+    width:100%;
+    accent-color:#1769e0;
+    cursor:pointer;
+}
+
+.hint{
+    color:#718096;
+    font-size:13px;
+    margin-top:8px;
+}
+
+.button{
+    width:100%;
+    border:0;
+    border-radius:13px;
+    padding:15px;
+    margin-top:20px;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.compressBtn{
+    background:#1769e0;
+    color:white;
+    box-shadow:0 8px 20px rgba(23,105,224,.2);
+}
+
+.compressBtn:hover{
+    background:#1258bd;
+}
+
+.secondaryBtn{
+    background:#eef5ff;
+    color:#1769e0;
 }
 
 .result{
-display:none;
-margin-top:25px;
-padding:20px;
-background:#f0fdf4;
-border-radius:15px;
+    display:none;
+    margin-top:25px;
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
 }
 
-.download{
-background:#16a34a;
-color:white;
-text-decoration:none;
-display:inline-block;
-margin-top:15px;
+.success{
+    color:#15803d;
+    font-size:18px;
+    font-weight:800;
 }
 
-.info{
-margin-top:35px;
-color:#64748b;
-font-size:14px;
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:17px 0;
+}
+
+.stat{
+    background:white;
+    border-radius:12px;
+    padding:12px 18px;
+    border:1px solid #dcfce7;
+}
+
+.stat small{
+    display:block;
+    color:#64748b;
+    margin-bottom:4px;
+}
+
+.stat strong{
+    color:#102a43;
+}
+
+.downloadBtn{
+    display:inline-block;
+    background:#16a34a;
+    color:white;
+    text-decoration:none;
+    padding:14px 25px;
+    border-radius:12px;
+    font-weight:800;
+}
+
+.downloadBtn:hover{
+    background:#15803d;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.feature{
+    background:#ffffff;
+    border:1px solid #e2eaf3;
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+}
+
+.featureIcon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.feature strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.feature p{
+    color:#718096;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.privacy{
+    text-align:center;
+    margin-top:25px;
+    color:#718096;
+    font-size:13px;
 }
 
 footer{
-text-align:center;
-padding:30px;
-color:#64748b;
-font-size:14px;
+    text-align:center;
+    padding:35px 20px;
+    color:#718096;
+    font-size:13px;
 }
 
-@media(max-width:600px){
-h1{font-size:32px}
-.card{padding:20px}
-main{margin:35px auto}
+@media(max-width:700px){
+
+    header{
+        padding:15px 20px;
+    }
+
+    .badge{
+        display:none;
+    }
+
+    main{
+        margin:35px auto;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .tool{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .dropzone{
+        padding:42px 15px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
@@ -185,143 +373,484 @@ main{margin:35px auto}
 <body>
 
 <header>
-<div class="logo">
-<div class="logo-icon">S</div>
-Senta
-</div>
+    <div class="nav">
+
+        <div class="logo">
+            <div class="logoMark">S</div>
+            Senta
+        </div>
+
+        <div class="badge">
+            Free • Fast • Private
+        </div>
+
+    </div>
 </header>
+
 
 <main>
 
-<h1>Compress Your Images</h1>
+<section class="hero">
 
-<p class="subtitle">
-Reduce image file size quickly while keeping good quality.
-</p>
+    <h1>
+        Compress Your <span>Images</span>
+    </h1>
 
-<div class="card">
+    <p>
+        Reduce image file size quickly while keeping great quality.
+        Everything happens directly in your browser.
+    </p>
 
-<label class="upload" for="imageInput">
-<div class="upload-icon">🖼️</div>
-<h2>Choose an Image</h2>
-<p>JPG, PNG or WebP • Free & Easy</p>
-</label>
+</section>
 
-<input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp">
 
-<div class="controls" id="controls">
+<section class="tool">
 
-<label>
-Compression Quality:
-<span id="qualityText">80%</span>
-</label>
+    <label class="dropzone" id="dropzone" for="fileInput">
 
-<input type="range" id="quality" min="10" max="100" value="80">
+        <div class="uploadIcon">🖼️</div>
 
-<button class="compress" id="compressBtn">
-Compress Image
-</button>
+        <h2>
+            Drop your image here
+        </h2>
+
+        <p>
+            or <strong>click to choose a file</strong>
+        </p>
+
+        <p style="margin-top:8px;">
+            JPG • PNG • WebP
+        </p>
+
+    </label>
+
+    <input
+        type="file"
+        id="fileInput"
+        accept="image/jpeg,image/png,image/webp"
+    >
+
+
+    <div class="controls" id="controls">
+
+        <div class="preview" id="preview">
+
+            <img id="previewImage" alt="Image preview">
+
+            <div class="fileName" id="fileName"></div>
+
+        </div>
+
+
+        <div class="sliderTitle">
+
+            <span>Compression Quality</span>
+
+            <span id="qualityValue">80%</span>
+
+        </div>
+
+        <input
+            type="range"
+            id="quality"
+            min="10"
+            max="100"
+            value="80"
+        >
+
+        <div class="hint">
+            Higher quality = better image quality and larger file.
+            Lower quality = smaller file.
+        </div>
+
+
+        <button
+            class="button compressBtn"
+            id="compressBtn"
+        >
+            Compress Image
+        </button>
+
+    </div>
+
+
+    <div class="result" id="result">
+
+        <div class="success">
+            ✓ Image compressed successfully
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <small>Original</small>
+                <strong id="originalSize">—</strong>
+            </div>
+
+            <div class="stat">
+                <small>Compressed</small>
+                <strong id="compressedSize">—</strong>
+            </div>
+
+            <div class="stat">
+                <small>Saved</small>
+                <strong id="savedSize">—</strong>
+            </div>
+
+        </div>
+
+
+        <a
+            id="downloadBtn"
+            class="downloadBtn"
+            download="senta-compressed.jpg"
+        >
+            Download Image
+        </a>
+
+        <button
+            class="button secondaryBtn"
+            id="anotherBtn"
+        >
+            Compress Another Image
+        </button>
+
+    </div>
+
+</section>
+
+
+<div class="features">
+
+    <div class="feature">
+
+        <div class="featureIcon">⚡</div>
+
+        <strong>Fast</strong>
+
+        <p>
+            Compress images quickly without waiting for uploads.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="featureIcon">🔒</div>
+
+        <strong>Private</strong>
+
+        <p>
+            Your image is processed directly in your browser.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="featureIcon">💙</div>
+
+        <strong>Free</strong>
+
+        <p>
+            No account or payment is required.
+        </p>
+
+    </div>
 
 </div>
 
-<div class="result" id="result">
-<strong id="resultText"></strong>
-<br>
 
-<a id="downloadBtn" class="download" download="senta-compressed.jpg">
-Download Compressed Image
-</a>
+<div class="privacy">
+    Your images are not uploaded to a server. Processing happens locally on your device.
 </div>
-
-</div>
-
-<p class="info">
-Your image is processed directly in your browser.
-It is not uploaded to a server.
-</p>
 
 </main>
 
+
 <footer>
-© 2026 Senta • Free Online Image Compressor
+    © 2026 Senta • Free Online Image Compressor
 </footer>
 
+
 <script>
-const imageInput = document.getElementById("imageInput");
+
+const fileInput = document.getElementById("fileInput");
+const dropzone = document.getElementById("dropzone");
+
 const controls = document.getElementById("controls");
+const preview = document.getElementById("preview");
+const previewImage = document.getElementById("previewImage");
+const fileName = document.getElementById("fileName");
+
 const quality = document.getElementById("quality");
-const qualityText = document.getElementById("qualityText");
+const qualityValue = document.getElementById("qualityValue");
+
 const compressBtn = document.getElementById("compressBtn");
+
 const result = document.getElementById("result");
-const resultText = document.getElementById("resultText");
+
+const originalSize = document.getElementById("originalSize");
+const compressedSize = document.getElementById("compressedSize");
+const savedSize = document.getElementById("savedSize");
+
 const downloadBtn = document.getElementById("downloadBtn");
+const anotherBtn = document.getElementById("anotherBtn");
 
-let selectedImage = null;
+let selectedFile = null;
+let downloadURL = null;
 
-imageInput.addEventListener("change", function(){
-const file = this.files[0];
 
-if(!file) return;
+function formatSize(bytes){
 
-selectedImage = file;
-controls.style.display = "block";
-result.style.display = "none";
+    if(bytes < 1024){
+        return bytes + " B";
+    }
+
+    if(bytes < 1024 * 1024){
+        return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+}
+
+
+function loadFile(file){
+
+    if(!file){
+        return;
+    }
+
+    if(!file.type.startsWith("image/")){
+        alert("Please choose an image file.");
+        return;
+    }
+
+    selectedFile = file;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        previewImage.src = e.target.result;
+
+        fileName.textContent = file.name;
+
+        preview.style.display = "block";
+        controls.style.display = "block";
+
+        result.style.display = "none";
+
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+fileInput.addEventListener("change", function(){
+
+    loadFile(this.files[0]);
+
 });
+
+
+dropzone.addEventListener("dragover", function(e){
+
+    e.preventDefault();
+
+    dropzone.classList.add("dragover");
+
+});
+
+
+dropzone.addEventListener("dragleave", function(){
+
+    dropzone.classList.remove("dragover");
+
+});
+
+
+dropzone.addEventListener("drop", function(e){
+
+    e.preventDefault();
+
+    dropzone.classList.remove("dragover");
+
+    const file = e.dataTransfer.files[0];
+
+    loadFile(file);
+
+});
+
 
 quality.addEventListener("input", function(){
-qualityText.textContent = this.value + "%";
+
+    qualityValue.textContent = quality.value + "%";
+
 });
+
 
 compressBtn.addEventListener("click", function(){
 
-if(!selectedImage) return;
+    if(!selectedFile){
+        alert("Please choose an image first.");
+        return;
+    }
 
-const reader = new FileReader();
+    compressBtn.textContent = "Compressing...";
+    compressBtn.disabled = true;
 
-reader.onload = function(e){
+    const reader = new FileReader();
 
-const img = new Image();
+    reader.onload = function(e){
 
-img.onload = function(){
+        const img = new Image();
 
-const canvas = document.createElement("canvas");
-const ctx = canvas.getContext("2d");
+        img.onload = function(){
 
-canvas.width = img.width;
-canvas.height = img.height;
+            const canvas = document.createElement("canvas");
 
-ctx.drawImage(img,0,0);
+            const ctx = canvas.getContext("2d");
 
-const qualityValue = Number(quality.value) / 100;
+            canvas.width = img.width;
+            canvas.height = img.height;
 
-canvas.toBlob(function(blob){
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
 
-if(!blob) return;
 
-const originalKB = (selectedImage.size / 1024).toFixed(1);
-const compressedKB = (blob.size / 1024).toFixed(1);
+            const qualityNumber =
+                Number(quality.value) / 100;
 
-const url = URL.createObjectURL(blob);
 
-downloadBtn.href = url;
+            canvas.toBlob(function(blob){
 
-resultText.textContent =
-"Original: " + originalKB + " KB → Compressed: " + compressedKB + " KB";
+                if(!blob){
 
-result.style.display = "block";
+                    alert("Compression failed. Please try another image.");
 
-}, "image/jpeg", qualityValue);
+                    compressBtn.textContent = "Compress Image";
+                    compressBtn.disabled = false;
 
-};
+                    return;
+                }
 
-img.src = e.target.result;
 
-};
+                if(downloadURL){
+                    URL.revokeObjectURL(downloadURL);
+                }
 
-reader.readAsDataURL(selectedImage);
+
+                downloadURL =
+                    URL.createObjectURL(blob);
+
+
+                const original =
+                    selectedFile.size;
+
+                const compressed =
+                    blob.size;
+
+
+                let saved =
+                    ((original - compressed) / original) * 100;
+
+
+                if(saved < 0){
+                    saved = 0;
+                }
+
+
+                originalSize.textContent =
+                    formatSize(original);
+
+                compressedSize.textContent =
+                    formatSize(compressed);
+
+                savedSize.textContent =
+                    saved.toFixed(1) + "%";
+
+
+                downloadBtn.href =
+                    downloadURL;
+
+
+                downloadBtn.download =
+                    "senta-compressed.jpg";
+
+
+                result.style.display =
+                    "block";
+
+
+                compressBtn.textContent =
+                    "Compress Image";
+
+                compressBtn.disabled =
+                    false;
+
+
+                result.scrollIntoView({
+                    behavior:"smooth",
+                    block:"center"
+                });
+
+
+            }, "image/jpeg", qualityNumber);
+
+        };
+
+
+        img.src = e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(selectedFile);
 
 });
+
+
+anotherBtn.addEventListener("click", function(){
+
+    selectedFile = null;
+
+    fileInput.value = "";
+
+    preview.style.display = "none";
+
+    controls.style.display = "none";
+
+    result.style.display = "none";
+
+    previewImage.src = "";
+
+    fileName.textContent = "";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+window.addEventListener("beforeunload", function(){
+
+    if(downloadURL){
+        URL.revokeObjectURL(downloadURL);
+    }
+
+});
+
 </script>
 
 </body>
-  </html>
+      </html>
